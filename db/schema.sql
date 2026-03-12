@@ -1,3 +1,7 @@
+DROP VIEW IF EXISTS vw_platillos_populares;
+DROP VIEW IF EXISTS vw_historial_ventas;
+DROP VIEW IF EXISTS vw_platillos_disponibles;
+
 DROP TABLE IF EXISTS alerta_stock;
 DROP TABLE IF EXISTS venta;
 DROP TABLE IF EXISTS platillo_ingrediente;
@@ -27,7 +31,7 @@ CREATE TABLE mesero (
     nombre VARCHAR(100) NOT NULL
 );
 
--- Receta de cada platillo
+-- Receta de cada platillo (relación M:N entre platillo e ingrediente)
 CREATE TABLE platillo_ingrediente (
     platillo_ingrediente_id SERIAL PRIMARY KEY,
     platillo_id INT NOT NULL REFERENCES platillo(platillo_id) ON DELETE CASCADE,
@@ -45,7 +49,7 @@ CREATE TABLE venta (
     fecha_hora TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
--- Alerta de stock
+-- Log de alertas de stock bajo
 CREATE TABLE alerta_stock (
     alerta_stock_id SERIAL PRIMARY KEY,
     ingrediente_id INT NOT NULL REFERENCES ingrediente(ingrediente_id) ON DELETE CASCADE,
